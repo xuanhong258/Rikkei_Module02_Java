@@ -126,12 +126,11 @@ public class Exam02 {
                             for (int k = j + 1; k < row; k++) {
                                 if (matrixInteger[min_index][i] > matrixInteger[k][i]) {
                                     min_index = k;
-
-                                    int tmp = matrixInteger[min_index][i];
-                                    matrixInteger[min_index][i] = matrixInteger[k][i];
-                                    matrixInteger[k][i] = tmp;
                                 }
                             }
+                            int tmp = matrixInteger[min_index][i];
+                            matrixInteger[min_index][i] = matrixInteger[j][i];
+                            matrixInteger[j][i] = tmp;
                         }
                     }
                     System.out.println("Ma trận sau khi sắp xếp là: ");
