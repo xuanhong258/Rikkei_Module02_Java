@@ -42,9 +42,10 @@ public class Exercise03 {
            k++;
        }
 
+
         System.out.println("Mảng sau khi gộp là: ");
         for (int number : numbersThree) {
-            System.out.printf("%d\t",number);
+            System.out.printf("%d\t", number);
         }
 
     }
