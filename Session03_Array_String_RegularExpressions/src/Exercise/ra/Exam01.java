@@ -6,8 +6,8 @@ public class Exam01 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] numberIntegers = new int[8];
-
+        int[] numberIntegers = new int[100];
+        int currentIndex = 0;
         do {
             System.out.println("*******************MENU*******************");
             System.out.println("1. Nhập giá trị n phần tử của mảng (n nhập từ bàn phím)");
@@ -25,29 +25,28 @@ public class Exam01 {
             System.out.print("Lựa chọn của bạn là: ");
 
             int choose = Integer.parseInt(sc.nextLine());
-
             switch (choose) {
                 case 1:
                     System.out.println("Nhập vào số lượng phần của mảng: ");
                     int quantity = Integer.parseInt(sc.nextLine());
                     for (int i = 0; i < quantity; i++) {
                         System.out.printf("Nhập vào phần tử %d: ", (i + 1));
-                        numberIntegers[i] = Integer.parseInt(sc.nextLine());
+                        numberIntegers[currentIndex++] = Integer.parseInt(sc.nextLine());
                     }
                     break;
                 case 2:
                     System.out.println("Các phần tử trong mảng là: ");
-                    for (int element : numberIntegers) {
-                        System.out.printf("%d\t", element);
+                    for (int i = 0; i < currentIndex; i++) {
+                        System.out.printf("%d\t", numberIntegers[i]);
                     }
                     System.out.printf("\n");
                     break;
                 case 3:
                     int cnt = 0;
                     int sum = 0;
-                    for (int element : numberIntegers) {
-                        if (element > 0) {
-                            sum += element;
+                    for (int i = 0; i < currentIndex; i++) {
+                        if (numberIntegers[i] > 0) {
+                            sum += numberIntegers[i];
                             cnt++;
                         }
                     }
@@ -60,7 +59,7 @@ public class Exam01 {
                     int findIndex = Integer.parseInt(sc.nextLine());
                     boolean flag = false;
                     System.out.printf("Các vị trí có giá trị bằng %d là: ", findIndex);
-                    for (int i = 0; i < numberIntegers.length; i++) {
+                    for (int i = 0; i < currentIndex; i++) {
                         if (numberIntegers[i] == findIndex) {
                             flag = true;
                             System.out.printf("%3d", i);
@@ -74,8 +73,8 @@ public class Exam01 {
                     break;
                 case 5:
                     System.out.printf("Mảng sau khi sắp xếp là: ");
-                    for (int i = 0; i < numberIntegers.length; i++) {
-                        for (int j = i + 1; j < numberIntegers.length - i - 1; j++) {
+                    for (int i = 0; i < currentIndex; i++) {
+                        for (int j = i + 1; j < currentIndex - i - 1; j++) {
                             if (numberIntegers[i] < numberIntegers[j]) {
                                 int tmp = numberIntegers[i];
                                 numberIntegers[i] = numberIntegers[j];
@@ -83,17 +82,14 @@ public class Exam01 {
                             }
                         }
                     }
-                    for (int element : numberIntegers) {
-                        System.out.printf("%d\t", element);
-                    }
                     System.out.printf("\n");
                     break;
                 case 6:
                     boolean isCheck = false;
                     int count = 0;
-                    for (int element : numberIntegers) {
-                        for (int i = 2; i <= Math.sqrt(element); i++) {
-                            if (element % i == 0) {
+                    for (int i = 0; i < currentIndex; i++) {
+                        for (int j = 2; j <= Math.sqrt(numberIntegers[i]); i++) {
+                            if (numberIntegers[i] % j == 0) {
                                 isCheck = true;
                                 break;
                             }
@@ -106,13 +102,13 @@ public class Exam01 {
                     System.out.printf("\n");
                     break;
                 case 7:
-                    int[] newArray = new int[8];
+                    int[] newArray = new int[currentIndex];
                     int i = 0;
                     int k = 0;
                     int m = 0;
-                    for (int element : numberIntegers) {
-                        if (element % 3 == 0 && element % 2 == 0 && element != 0) {
-                            newArray[i] = element;
+                    for (int c = 0; c < currentIndex; c++) {
+                        if (numberIntegers[c] % 3 == 0 && numberIntegers[c] % 2 == 0 && numberIntegers[c] != 0) {
+                            newArray[i] = numberIntegers[c];
                             i++;
                         }
                     }
@@ -126,9 +122,9 @@ public class Exam01 {
                         }
                     }
 
-                    for (int element : numberIntegers) {
-                        if (element % 3 != 0) {
-                            newArray[i + m] = element;
+                    for (int c = 0; c < currentIndex; c++) {
+                        if (numberIntegers[c] % 3 != 0) {
+                            newArray[i + m] = numberIntegers[c];
                             m++;
                         }
                     }
@@ -143,9 +139,9 @@ public class Exam01 {
                         }
                     }
 
-                    for (int element : numberIntegers) {
-                        if (element % 3 == 0 && element % 2 != 0) {
-                            newArray[i + m + k] = element;
+                    for (int c = 0; c < currentIndex; c++) {
+                        if (numberIntegers[c] % 3 == 0 && numberIntegers[c] % 2 != 0) {
+                            newArray[i + m + k] = numberIntegers[c];
                             k++;
                         }
                     }
@@ -161,14 +157,14 @@ public class Exam01 {
                     }
 
                     System.out.println("Mảng mới là: ");
-                    for (int element : newArray) {
-                        System.out.printf("%d\t", element);
+                    for (int c = 0; c < currentIndex; c++) {
+                        System.out.printf("%d\t", newArray[c]);
                     }
                     System.out.printf("\n");
                     break;
                 case 8:
-                    for (int j = 0; j < numberIntegers.length - 1; j++) {
-                        for (int l = 0; l < numberIntegers.length - j - 1; l++) {
+                    for (int j = 0; j < currentIndex - 1; j++) {
+                        for (int l = 0; l < currentIndex - j - 1; l++) {
                             if (numberIntegers[l] < numberIntegers[l + 1]) {
                                 int tmp = numberIntegers[l];
                                 numberIntegers[l] = numberIntegers[l + 1];
@@ -177,23 +173,25 @@ public class Exam01 {
                         }
                     }
                     System.out.printf("Mảng sau khi sắp xếp giảm dần là: ");
-                    for (int element : numberIntegers) {
-                        System.out.printf("%d\t", element);
+                    for (int c = 0; c < currentIndex; c++) {
+                        System.out.printf("%d\t", numberIntegers[c]);
                     }
-                    int[] newArrayAfterInsert = new int[9];
+                    System.out.printf("\n");
+
+                    int[] newArrayAfterInsert = new int[currentIndex + 1];
 
                     System.out.print("Vui lòng nhập vào số muốn chèn: ");
 
                     int insertNumber = Integer.parseInt(sc.nextLine());
                     int index = -1;
-                    for (int j = 0; j < numberIntegers.length; j++) {
+                    for (int j = 0; j < currentIndex; j++) {
                         if (insertNumber < numberIntegers[j] && insertNumber > numberIntegers[j + 1]) {
                             newArrayAfterInsert[j] = insertNumber;
                             index = j;
                         }
                     }
 
-                    for (int j = 0; j <= numberIntegers.length; j++) {
+                    for (int j = 0; j <= currentIndex; j++) {
                         if(j < index + 1){
                             newArrayAfterInsert[j] = numberIntegers[j];
                         }else if(j == index + 1){

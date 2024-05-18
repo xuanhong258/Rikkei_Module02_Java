@@ -143,20 +143,106 @@ public class Exam02 {
                     System.out.printf("\n");
                     break;
                 case 6:
-
+                    System.out.print("Các phần tử là số nguyên tố trong mảng là: ");
+                    for (int i = 0; i < matrixInteger.length; i++) {
+                        for (int j = 0; j < matrixInteger[i].length; j++) {
+                            boolean flag = true;
+                            if (matrixInteger[i][j] < 2) {
+                                flag = false;
+                            }
+                            for (int k = 2; k <= Math.sqrt(matrixInteger[i][j]); k++) {
+                                if (matrixInteger[i][j] % k == 0) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                System.out.printf("%d\t", matrixInteger[i][j]);
+                            }
+                        }
+                    }
+                    System.out.printf("\n");
                     break;
                 case 7:
+                    int[] crossLineArray = new int[row];
+                    int k = 0;
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < col; j++) {
+                            if (i == j) {
+                                crossLineArray[k++] = matrixInteger[i][j];
+                            }
+                        }
+                    }
 
+                    int j,key;
+                    for (int i = 1; i < crossLineArray.length; i++) {
+                        key = crossLineArray[i];
+                        j = i - 1;
+
+                        while (j >= 0 && crossLineArray[j] < key){
+                            crossLineArray[j + 1] = crossLineArray[j];
+                            j--;
+                        }
+
+                        crossLineArray[j + 1] = key;
+                    }
+                    int m = 0;
+                    for (int i = 0; i < row; i++) {
+                        for (int l = 0; l < col; l++) {
+                            if (i == l) {
+                                matrixInteger[i][l] = crossLineArray[m++];
+                            }
+                        }
+                    }
+                    System.out.printf("\n");
                     break;
                 case 8:
-                    ;
+                    System.out.print("Nhập số lượng phần tử mảng muốn chèn: ");
+
+                    int size = Integer.parseInt(sc.nextLine());
+
+                    int[] OneDimensionArray = new int[size];
+                    System.out.printf("\n");
+                    for (int i = 0; i < OneDimensionArray.length; i++) {
+                        System.out.printf("Nhập vào phần tử thứ %d: ", (i + 1));
+                        OneDimensionArray[i] = Integer.parseInt(sc.nextLine());
+                    }
+
+                    System.out.printf("\n");
+
+                    System.out.print("Nhập vào vị trí muốn chèn vào mảng 2 chiều: ");
+
+                    int insertPosition = Integer.parseInt(sc.nextLine());
+
+                    int[][] newTwoDimensionArray = new int[row + 1][col];
+                    for (int i = 0; i < insertPosition; i++) {
+                        for (int l = 0; l < col; l++) {
+                            newTwoDimensionArray[i][l] = matrixInteger[i][l];
+                        }
+                    }
+                    for (int l = 0; l < col; l++) {
+                        newTwoDimensionArray[insertPosition][l] = OneDimensionArray[l];
+                    }
+
+                    for (int i = insertPosition; i < row; i++) {
+                        for (int l = 0; l < col; l++) {
+                            newTwoDimensionArray[i + 1][l] = matrixInteger[i][l];
+                        }
+                    }
+                    System.out.println("Mảng 2 chiều sau khi chèn là: ");
+                    for (int i = 0; i < newTwoDimensionArray.length; i++) {
+                        for (int l = 0; l < newTwoDimensionArray[i].length; l++) {
+                            System.out.printf("%5d", newTwoDimensionArray[i][l]);
+                        }
+                        System.out.printf("\n");
+                    }
+                    System.out.printf("\n");
                     break;
                 case 9:
                     System.exit(0);
                 default:
                     System.out.println("Vui lòng lựa chọn từ 1 -> 9");
             }
-
         } while (true);
     }
 }
