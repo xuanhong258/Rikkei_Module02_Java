@@ -86,9 +86,9 @@ public class Student {
     }
 
     public void displayData(){
-        System.out.println("Thông tin sinh viên là:");
-        System.out.printf("Mã sinh viên: %s - Tên: %s - Tuổi: %d - Giới tính: %s ", this.studentId, this.studentName, this.gen?"Nam":"Nữ");
+        System.out.printf("Mã sinh viên: %s - Tên: %s - Tuổi: %d - Giới tính: %s ", this.studentId, this.studentName,this.age, this.gen?"Nam":"Nữ");
         System.out.printf(" - Địa chỉ: %s - Số điện thoại: %s ", this.address, this.phoneNumber);
+        System.out.printf("\n");
     }
 
 }
