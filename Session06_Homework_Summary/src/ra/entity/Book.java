@@ -86,13 +86,13 @@ public class Book {
         this.importPrice = inputImportPrice(scanner);
         this.exportPrice = exportImportPrice(scanner);
         this.author = inputAuthor(scanner);
+        this.year = yearInput(scanner);
     }
 
 
     public void displayData() {
-        System.out.printf("Mã sách: %s - Tên sách: %s - Giá nhập: %3f - Giá xuất: %3f - Tác giả: %s,", this.bookId, this.bookName, this.importPrice, this.exportPrice, this.author);
-        this.profitBook();
-        System.out.printf("- Lợi nhuận: %.3f - Năm xuất bản: %d", this.interest, this.year);
+        System.out.printf("Mã sách: %s - Tên sách: %s - Giá nhập: %.3f - Giá xuất: %.3f - Tác giả: %s", this.bookId, this.bookName, this.importPrice, this.exportPrice, this.author);
+        System.out.printf(" - Lợi nhuận: %.3f - Năm xuất bản: %d", this.interest, this.year);
     }
 
     public String inputBookId(Scanner scanner, Book[] books, int currentIndex) {
@@ -109,7 +109,7 @@ public class Book {
             if (isCheck) {
                 System.err.println("Mã sách đã bị trùng lặp, vui lòng nhập lại");
             } else {
-                return this.bookId;
+                return bookId;
             }
         } while (true);
     }
@@ -117,26 +117,29 @@ public class Book {
     public String inputBookName(Scanner scanner, Book[] books, int currentIndex) {
         System.out.println("Nhập vào tên sách: ");
         do {
-            boolean bookNameUnique = true;
-            boolean bookLengthCheck = true;
-            boolean bookStartWithB = true;
+            boolean bookNameUnique = false;
+            boolean bookLengthCheck = false;
+            boolean bookStartWithB = false;
             String bookName = scanner.nextLine();
             for (int i = 0; i < currentIndex; i++) {
-                if (!bookName.equals(books[i].getBookName())) {
-                    bookNameUnique = false;
+                if (bookName.equals(books[i].getBookName())) {
+                    bookNameUnique = true;
+                    break;
                 }
             }
-            if (bookName.length() == 4 && !bookNameUnique) {
-                if (bookName.startsWith("B")) {
-                    return bookName;
-                } else {
-                    bookStartWithB = false;
-                }
-            } else {
-                bookLengthCheck = false;
-            }
+
             if (bookNameUnique) {
                 System.err.println("Tên sách bị trùng lặp, vui lòng nhập lại tên sách");
+            }else{
+                if (bookName.length() == 4) {
+                    if (bookName.startsWith("B")) {
+                        return bookName;
+                    } else {
+                        bookStartWithB = true;
+                    }
+                } else {
+                    bookLengthCheck = true;
+                }
             }
             if (bookLengthCheck) {
                 System.err.println("Độ dài phải gồm 4 kí tự, vui lòng nhập lại");
@@ -150,9 +153,9 @@ public class Book {
     public float inputImportPrice(Scanner scanner) {
         System.out.println("Vui lòng nhập vào giá nhập của sách");
         do {
-            this.importPrice = Float.parseFloat(scanner.nextLine());
-            if (this.importPrice > 0) {
-                return this.importPrice;
+            float importPrice = Float.parseFloat(scanner.nextLine());
+            if (importPrice > 0) {
+                return importPrice;
             } else {
                 System.err.println("Giá nhập của sách phải lớn hơn 0");
             }
@@ -162,9 +165,9 @@ public class Book {
     public float exportImportPrice(Scanner scanner) {
         System.out.println("Vui lòng nhập vào giá xuất của sách");
         do {
-            this.exportPrice = Float.parseFloat(scanner.nextLine());
-            if (this.exportPrice >= 1.3 * this.importPrice) {
-                return this.exportPrice;
+            float exportPrice = Float.parseFloat(scanner.nextLine());
+            if (exportPrice >= 1.3 * this.importPrice) {
+                return exportPrice;
             } else {
                 System.err.println("Giá xuất của sách phải lớn hơn ít nhất 30% so với giá nhập");
             }
@@ -174,9 +177,9 @@ public class Book {
     public String inputAuthor(Scanner scanner) {
         System.out.println("Nhập vào tên tác giả: ");
         do {
-            this.author = scanner.nextLine();
-            if (this.author.length() >= 6 && this.author.length() <= 50) {
-                return this.author;
+            String author = scanner.nextLine();
+            if (author.length() >= 6 && author.length() <= 50) {
+                return author;
             } else {
                 System.err.println("Độ dài tên tác giả phải từ 6-50 ký tự, vui lòng nhập lại");
             }
@@ -190,9 +193,9 @@ public class Book {
     public int yearInput(Scanner scanner) {
         System.out.println("Vui lòng nhập vào năm xuất bản:");
         do {
-            this.year = Integer.parseInt(scanner.nextLine());
-            if (this.year > 2000) {
-                return this.year;
+            int year = Integer.parseInt(scanner.nextLine());
+            if (year > 2000) {
+                return year;
             } else {
                 System.err.println("Năm xuất bản phải xuất bản sau năm 2000, vui lòng thử lại");
             }
