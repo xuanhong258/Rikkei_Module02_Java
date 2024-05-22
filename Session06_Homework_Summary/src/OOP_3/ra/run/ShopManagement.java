@@ -6,14 +6,13 @@ import OOP_3.ra.entity.Product;
 import java.util.Scanner;
 
 public class ShopManagement {
-    int indexCategorie = 0;
-    int indexProduct = 0;
-    Categories[] categories = new Categories[100];
-    Product[] products = new Product[100];
+    static int indexCategorie = 0;
+    static int indexProduct = 0;
+    static Categories[] categories = new Categories[100];
+    static Product[] products = new Product[100];
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ShopManagement shop = new ShopManagement();
         do {
             System.out.println("******************SHOP MENU*******************");
             System.out.println("1. Quản lý danh mục sản phẩm");
@@ -24,10 +23,10 @@ public class ShopManagement {
             int choose = Integer.parseInt(scanner.nextLine());
             switch (choose) {
                 case 1:
-                    shop.displayCategoriesMenu(scanner);
+                    displayCategoriesMenu(scanner);
                     break;
                 case 2:
-                    shop.displayProductMenu(scanner);
+                    displayProductMenu(scanner);
                     break;
                 case 3:
                     System.exit(0);
@@ -38,7 +37,7 @@ public class ShopManagement {
         } while (true);
     }
 
-    public void displayCategoriesMenu(Scanner scanner) {
+    public static void displayCategoriesMenu(Scanner scanner) {
         boolean flag = true;
         do {
             System.out.println("********************CATEGORIES MENU***********");
@@ -79,7 +78,7 @@ public class ShopManagement {
         } while (flag);
     }
 
-    public void inputCategoriesInfo(Scanner scanner) {
+    public static void inputCategoriesInfo(Scanner scanner) {
         System.out.println("Nhập vào số lượng danh mục muốn nhập");
         int quantityCategories = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < quantityCategories; i++) {
@@ -89,14 +88,14 @@ public class ShopManagement {
         }
     }
 
-    public void displayCategories() {
+    public static void displayCategories() {
         for (int i = 0; i < indexCategorie; i++) {
             categories[i].displayData();
-            System.out.printf("\n");
+            System.out.print("\n");
         }
     }
 
-    public int indexCatalogId(int catalogId) {
+    public static int indexCatalogId(int catalogId) {
         int index = -1;
         for (int i = 0; i < indexCategorie; i++) {
             if (categories[i].getCatalogId() == catalogId) {
@@ -106,7 +105,7 @@ public class ShopManagement {
         return index;
     }
 
-    public void updateCategories(Scanner scanner) {
+    public static void updateCategories(Scanner scanner) {
         boolean flag = false;
         System.out.println("Nhập vào mã danh mục muốn cập nhật");
         int catalogId = Integer.parseInt(scanner.nextLine());
@@ -153,7 +152,7 @@ public class ShopManagement {
         } while (flag);
     }
 
-    public void deleteCategories(Scanner scanner) {
+    public static void deleteCategories(Scanner scanner) {
         System.out.println("Nhập vào mã danh mục cần xóa");
         int catalogId = Integer.parseInt(scanner.nextLine());
 
@@ -177,7 +176,7 @@ public class ShopManagement {
 
     }
 
-    public void updateCategoriesStatus(Scanner scanner) {
+    public static void updateCategoriesStatus(Scanner scanner) {
         System.out.println("Nhập vào mã danh mục cần cập nhật trạng thái");
         int catalogId = Integer.parseInt(scanner.nextLine());
         int index = indexCatalogId(catalogId);
@@ -186,7 +185,7 @@ public class ShopManagement {
 
     //-----------------------Product Menu----------------------------------
 
-    public void displayProductMenu(Scanner scanner) {
+    public static void displayProductMenu(Scanner scanner) {
         boolean flag = true;
         do {
             System.out.println("*****************PRODUCT MENU***********");
@@ -235,7 +234,7 @@ public class ShopManagement {
         } while (flag);
     }
 
-    public void inputProductInfo(Scanner scanner) {
+    public static void inputProductInfo(Scanner scanner) {
         System.out.println("Nhập vào số lượng sản phẩm muốn nhập thông tin");
         int productQuantity = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < productQuantity; i++) {
@@ -244,14 +243,14 @@ public class ShopManagement {
         }
     }
 
-    public void displayProduct() {
+    public static void displayProduct() {
         for (int i = 0; i < indexProduct; i++) {
             products[i].displayData();
             System.out.println("\n");
         }
     }
 
-    public void sortProductByPrice(){
+    public static void sortProductByPrice(){
         for (int i = 0; i < indexProduct - 1; i++) {
             for (int j = i + 1; j < indexProduct; j++) {
                 if(products[i].getPrice() > products[j].getPrice()){
@@ -263,7 +262,7 @@ public class ShopManagement {
         }
     }
 
-    public int indexProductId(String productId) {
+    public static int indexProductId(String productId) {
         int index = -1;
         for (int i = 0; i < indexProduct; i++) {
             if (products[i].getProductId().equals(productId)) {
@@ -273,7 +272,7 @@ public class ShopManagement {
         return index;
     }
 
-    public void updateProduct(Scanner scanner){
+    public static void updateProduct(Scanner scanner){
         System.out.println("Nhập mã sản phẩm muốn cập nhật gồm 4 ký tự bắt đầu là một trong 3 ký tự (C, S, A)");
         String productId = scanner.nextLine();
         int index = indexProductId(productId);
@@ -336,7 +335,7 @@ public class ShopManagement {
         } while (flag);
     }
 
-    public void deleteProduct(Scanner scanner){
+    public static void deleteProduct(Scanner scanner){
         System.out.println("Nhập mã sản phẩm muốn xóa");
         String productId = scanner.nextLine();
 
@@ -351,7 +350,7 @@ public class ShopManagement {
         }
     }
 
-    public void findProductByName(Scanner scanner){
+    public static void findProductByName(Scanner scanner){
         System.out.println("Nhập vào tên sản phẩm muốn tìm kiếm");
         String productName = scanner.nextLine();
         int index = -1;
@@ -368,7 +367,7 @@ public class ShopManagement {
         }
     }
 
-    public void findProductByPrice(Scanner scanner){
+    public static void findProductByPrice(Scanner scanner){
         boolean flag = true;
         do {
             System.out.println("Nhập vào giá đầu tiên");
@@ -381,7 +380,7 @@ public class ShopManagement {
                 for (int i = 0; i < indexProduct; i++) {
                     if(products[i].getPrice() >= priceNumber1 && products[i].getPrice() <= priceNumber2){
                         products[i].displayData();
-                        System.out.printf("\n");
+                        System.out.print("\n");
                     }
                 }
             }else {

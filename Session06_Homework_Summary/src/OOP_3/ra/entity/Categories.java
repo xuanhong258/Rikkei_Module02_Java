@@ -51,7 +51,7 @@ public class Categories {
     }
 
     public void inputData(Scanner scanner, Categories[] arrCategories, int index) {
-        this.catalogId = index + 1;
+        this.catalogId = generateIdIdentity(arrCategories, index);
         this.catalogName = inputCatalogName(scanner, arrCategories, index);
         this.descriptions = inputDescriptions(scanner);
         this.catalogStatus = inputCatalogStatus(scanner);
@@ -61,7 +61,19 @@ public class Categories {
         System.out.printf("Id: %d - Name: %s - Description: %s - Status: %s", this.catalogId, this.catalogName, this.descriptions, this.catalogStatus?"hoạt động":"không hoạt động");
     }
 
-
+    public int generateIdIdentity(Categories[] arrCategories, int index){
+        if(index == 0){
+            return 1;
+        }else {
+            int max = arrCategories[0].getCatalogId();
+            for (int i = 1; i < index; i++) {
+                if(max < arrCategories[i].getCatalogId()){
+                    max = arrCategories[i].getCatalogId();
+                }
+            }
+            return max;
+        }
+    }
     public String inputCatalogName(Scanner scanner, Categories[] arrCategories, int index) {
         System.out.println("Nhập vào tên danh mục:");
         do {
