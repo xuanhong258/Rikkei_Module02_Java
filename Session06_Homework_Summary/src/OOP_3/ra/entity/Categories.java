@@ -51,23 +51,19 @@ public class Categories {
     }
 
     public void inputData(Scanner scanner, Categories[] arrCategories, int index) {
-        arrCategories[index].setCatalogId(index);
-        this.catalogId = inputCatalogId(arrCategories, index) + 1;
+        this.catalogId = index + 1;
         this.catalogName = inputCatalogName(scanner, arrCategories, index);
         this.descriptions = inputDescriptions(scanner);
         this.catalogStatus = inputCatalogStatus(scanner);
     }
 
     public void displayData(){
-
+        System.out.printf("Id: %d - Name: %s - Description: %s - Status: %s", this.catalogId, this.catalogName, this.descriptions, this.catalogStatus?"hoạt động":"không hoạt động");
     }
 
-    public int inputCatalogId(Categories[] arrCategories, int index) {
-        return arrCategories[index].getCatalogId();
-    }
 
     public String inputCatalogName(Scanner scanner, Categories[] arrCategories, int index) {
-        System.out.println("Nhập vào tên đồ uống:");
+        System.out.println("Nhập vào tên danh mục:");
         do {
             String catalogName = scanner.nextLine();
             boolean isCatalogNameCheck = false;
@@ -78,32 +74,32 @@ public class Categories {
                 }
             }
             if (!isCatalogNameCheck) {
-                if (catalogName.length() >= 4 && catalogName.length() <= 50) {
+                if (catalogName.length() <= 50) {
                     return catalogName;
                 } else {
-                    System.err.println("Độ dài tên đồ uống vượt quá 50 ký tự, vui lòng nhập lại");
+                    System.err.println("Độ dài tên danh mục quá 50 ký tự, vui lòng nhập lại");
                 }
             } else {
-                System.err.println("Tên đồ uống đã tồn tại, vui lòng nhập lại");
+                System.err.println("Tên danh mục đã tồn tại, vui lòng nhập lại");
             }
 
         } while (true);
     }
 
     public String inputDescriptions(Scanner scanner) {
-        System.out.println("Vui lòng nhập mô tả sản phẩm");
+        System.out.println("Vui lòng nhập mô tả danh mục");
         do {
             String descriptions = scanner.nextLine();
             if (descriptions.length() != 0) {
                 return descriptions;
             } else {
-                System.err.println("Vui lòng không để trống phần mô tả sản phẩm, vui lòng nhập lại");
+                System.err.println("Vui lòng không để trống phần mô tả danh mục, vui lòng nhập lại");
             }
         } while (true);
     }
 
     public boolean inputCatalogStatus(Scanner scanner) {
-        System.out.println("Vui lòng nhập trạng thái của sản phẩm");
+        System.out.println("Vui lòng nhập trạng thái của danh mục true or false");
         boolean catalogStatus = Boolean.parseBoolean(scanner.nextLine());
         return catalogStatus;
     }
