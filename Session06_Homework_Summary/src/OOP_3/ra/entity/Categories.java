@@ -71,7 +71,7 @@ public class Categories {
                     max = arrCategories[i].getCatalogId();
                 }
             }
-            return max;
+            return max + 1;
         }
     }
     public String inputCatalogName(Scanner scanner, Categories[] arrCategories, int index) {
