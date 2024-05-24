@@ -25,9 +25,9 @@ public class Point3D extends Point2D {
         setZ(z);
     }
 
-    public String getXYZ(){
-        float[] xyz = {getX(), getY(), getZ()};
-        return "x: " + getX() + ", y: " + getY() + ", z: " + getZ();
+    public float[] getXYZ(){
+        float[] arrFloats = {getX(), getY(), getZ()};
+        return arrFloats;
     }
 
     public String toString() {

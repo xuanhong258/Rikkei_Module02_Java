@@ -33,9 +33,9 @@ public class Point2D {
         this.y = y;
     }
 
-    public String getXY(){
-        float[] xy = {getX(), getY()};
-        return "x: " + xy[0] + ", y: " + xy[1];
+    public float[] getXY(){
+        float[] arrFloat = {this.x, this.y};
+        return arrFloat;
     }
 
     @Override
