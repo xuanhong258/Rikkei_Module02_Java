@@ -31,6 +31,7 @@ public class Circle {
     }
 
     public float getArea() {
+        this.calArea();
         return area;
     }
 

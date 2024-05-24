@@ -33,7 +33,6 @@ public class Cylinder extends Circle{
 
         cylinder.setRadius(5);
         cylinder.setColor("Blue");
-        cylinder.calArea();
         cylinder.setHeight(10);
 
         System.out.println(cylinder);
