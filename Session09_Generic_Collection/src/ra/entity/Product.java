@@ -158,7 +158,7 @@ public class Product implements IShop {
         for (Categories categories: ShopManagement.categoriesList) {
             System.out.printf("%d. %s\n", categories.getCatalogId(), categories.getCatalogName());
         }
-        System.out.println("Chọn danh mục");
+        System.out.println("Vui lòng chọn danh mục cho sản phẩm");
         return Integer.parseInt(scanner.nextLine());
     }
 

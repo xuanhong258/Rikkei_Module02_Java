@@ -225,7 +225,7 @@ public class ShopManagement {
             System.out.println("Nhập vào giá mới của sản phẩm");
             float newProductPrice = Float.parseFloat(scanner.nextLine());
             for (Product product : productList) {
-                if (product.getProductId() == productId) {
+                if (product.getProductId().equals(productId)) {
                     product.setPrice(newProductPrice);
                     break;
                 }
@@ -241,7 +241,7 @@ public class ShopManagement {
         String productId = scanner.nextLine();
         boolean isCheck = false;
         for (Product product : productList) {
-            if (product.getProductId() == productId) {
+            if (product.getProductId().equals(productId)) {
                 isCheck = true;
                 productList.remove(product);
                 break;
@@ -301,6 +301,7 @@ public class ShopManagement {
         }else {
             System.out.printf("Số lượng sản phẩm theo danh mục %d là %d :", catalogId, sum);
         }
+        System.out.printf("\n");
     }
 
     public static void searchProductByName(Scanner scanner){
