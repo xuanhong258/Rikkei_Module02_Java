@@ -75,7 +75,7 @@ public class Category implements IEntity{
                 }else {
                     System.err.println("Mã danh mục phải lớn hơn 0, vui lòng nhập lại");
                 }
-            }catch (ArithmeticException ae){
+            }catch (NumberFormatException ae){
                 System.err.println("Id sản phẩm phải là số nguyên, vui lòng nhập lại");
             }
         }while (true);
@@ -86,7 +86,7 @@ public class Category implements IEntity{
         do {
             try {
                 String name = scanner.nextLine();
-                String nameRegex = "[\\w]{6,30}";
+                String nameRegex = "[\\w[\\s]]{6,30}";
                 if (Pattern.matches(nameRegex, name)){
                     boolean isCheck = false;
                     for (Category category : Library.categoryList){
@@ -101,7 +101,7 @@ public class Category implements IEntity{
                         return name;
                     }
                 }else {
-                    System.err.println("Tên danh mục dài từ 6-30 kí tự, vui lòng nhập lại");
+                    System.err.println("Tên danh mục phải dài từ 6-30 kí tự, vui lòng nhập lại");
                 }
             }catch (Exception ex){
                 System.err.println("Không được để trống tên danh mục, vui lòng nhập lại");

@@ -97,20 +97,21 @@ public class Book implements IEntity {
     public void output() {
         System.out.printf("ID: %s - Title: %s - Author: %s", this.id, this.title, this.author);
         System.out.printf(" - Tác giả: %s - NXB: %d - Mô tả: %s", this.publisher, this.year, this.description);
-        for (Category category : Library.categoryList){
-            if (category.getId() == this.categoryId){
+        for (Category category : Library.categoryList) {
+            if (category.getId() == this.categoryId) {
                 System.out.printf(" - Tên danh mục: %s", category.getName());
                 break;
             }
         }
+        System.out.printf("\n");
     }
 
     public String inputId(Scanner scanner) {
         System.out.println("Nhập vào mã sách");
         do {
-            try {
-                String id = scanner.nextLine();
-                String idRegex = "[B][\\w]{3}";
+            String id = scanner.nextLine();
+            String idRegex = "[B][\\w]{3}";
+            if (!id.isEmpty()) {
                 if (Pattern.matches(idRegex, id)) {
                     boolean isCheck = false;
                     for (Book book : Library.bookList) {
@@ -127,8 +128,8 @@ public class Book implements IEntity {
                 } else {
                     System.err.println("Mã sách phải bắt đầu bằng chữ B và có 4 ký tự, vui lòng nhập lại");
                 }
-            } catch (Exception ex) {
-                System.err.println("Không được để trống mã sách, vui lòng nhập lại");
+            } else {
+                System.err.println("Không để trống mã sách, vui lòng nhập lại");
             }
         } while (true);
     }
@@ -136,9 +137,9 @@ public class Book implements IEntity {
     public String inputTitle(Scanner scanner) {
         System.out.println("Nhập vào tiêu đề sách");
         do {
-            try {
-                String title = scanner.nextLine();
-                String idRegex = "[\\w]{6,50}";
+            String title = scanner.nextLine();
+            String idRegex = "[\\w[\\s]]{6,50}";
+            if (!title.isEmpty()) {
                 if (Pattern.matches(idRegex, title)) {
                     boolean isCheck = false;
                     for (Book book : Library.bookList) {
@@ -155,20 +156,21 @@ public class Book implements IEntity {
                 } else {
                     System.err.println("Tiêu đề sách phải dài từ 6 -> 50 ký tự, vui lòng nhập lại");
                 }
-            } catch (Exception ex) {
-                System.err.println("Không được để trống tiêu đề sách");
+            } else {
+                System.err.println("Không được để trống tên sách, vui lòng nhập lại");
             }
+
         } while (true);
     }
 
     public String inputAuthor(Scanner scanner) {
         System.out.println("Vui lòng nhập vào tên tác giả");
         do {
-            try {
-                String author = scanner.nextLine();
+            String author = scanner.nextLine();
+            if (!author.isEmpty()) {
                 return author;
-            } catch (Exception ex) {
-                System.err.println("Không được để trống tên tác giả");
+            } else {
+                System.err.println("Không được để trống tên tác giả, vui lòng nhập lại");
             }
         } while (true);
     }
@@ -176,11 +178,11 @@ public class Book implements IEntity {
     public String inputPublisher(Scanner scanner) {
         System.out.println("Vui lòng nhập vào tên nhà xuất bản");
         do {
-            try {
-                String publisher = scanner.nextLine();
+            String publisher = scanner.nextLine();
+            if (!publisher.isEmpty()) {
                 return publisher;
-            } catch (Exception ex) {
-                System.err.println("Không được để trống nhà xuất bản");
+            } else {
+                System.err.println("Không được để trống nhà xuất bản, vui lòng nhập lại");
             }
         } while (true);
     }
@@ -195,13 +197,13 @@ public class Book implements IEntity {
 
                 int year = Integer.parseInt(scanner.nextLine());
 
-                if(year >= 1970 && year <= yearNow){
+                if (year >= 1970 && year <= yearNow) {
                     return year;
-                }else {
+                } else {
                     System.err.println("Năm xuất bản phải lớn hơn 1970 và nhỏ hơn năm hiện tại, vui lòng nhập lại");
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                System.err.println("Năm xuất bản chưa đúng định dạng, vui lòng nhập lại");
             }
         } while (true);
     }
@@ -209,42 +211,42 @@ public class Book implements IEntity {
     public String inputDescription(Scanner scanner) {
         System.out.println("Vui lòng nhập vào mô tả sách");
         do {
-            try {
-                String description = scanner.nextLine();
+            String description = scanner.nextLine();
+            if (!description.isEmpty()) {
                 return description;
-            } catch (Exception ex) {
-                System.err.println("Không được để trống mô tả sách");
+            } else {
+                System.err.println("Không được để trống mô tả sách, vui lòng nhập lại");
             }
         } while (true);
     }
 
-    public int inputCategoryId(Scanner scanner){
+    public int inputCategoryId(Scanner scanner) {
         System.out.println("Mã danh mục hiện có là:");
-        for (Category category : Library.categoryList){
+        for (Category category : Library.categoryList) {
             System.out.printf("ID: %d. %s", category.getId(), category.getName());
             System.out.printf("\n");
         }
         System.out.println("Vui lòng nhập vào mã danh mục cho sách");
         do {
-            try{
+            try {
                 int categoryId = Integer.parseInt(scanner.nextLine());
                 boolean isCheck = false;
-                for (Category category : Library.categoryList){
-                    if (category.getId() == categoryId){
+                for (Category category : Library.categoryList) {
+                    if (category.getId() == categoryId) {
                         isCheck = true;
                         break;
                     }
                 }
-                if (isCheck){
+                if (isCheck) {
                     return categoryId;
-                }else {
+                } else {
                     System.err.println("Mã danh mục vừa nhập không có trong mã danh mục đã lưu,vui lòng nhập lại");
                 }
-            }catch (ArithmeticException ate){
+            } catch (NumberFormatException ate) {
                 System.err.println("Mã danh mục phải là số nguyên");
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.err.println("Không được để trống mã danh mục");
             }
-        }while (true);
+        } while (true);
     }
 }
