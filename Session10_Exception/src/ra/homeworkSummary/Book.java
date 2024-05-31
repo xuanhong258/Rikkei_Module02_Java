@@ -1,4 +1,4 @@
-package ra;
+package ra.homeworkSummary;
 
 import java.util.Calendar;
 import java.util.Scanner;

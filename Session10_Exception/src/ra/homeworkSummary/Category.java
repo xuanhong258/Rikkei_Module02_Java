@@ -1,4 +1,4 @@
-package ra;
+package ra.homeworkSummary;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
