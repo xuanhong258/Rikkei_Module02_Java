@@ -18,7 +18,7 @@ public class Exercise07 {
             try {
                 str3.add(Integer.parseInt(el));
             }catch (Exception ex){
-                System.err.println("Chuỗi không thể convert sang kiểu số");
+                str3.add(0);
             }
         }
 
