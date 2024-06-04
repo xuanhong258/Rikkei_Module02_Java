@@ -1,7 +1,6 @@
 package ra.homeworkSummary;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Library {
     public static List<Category> categoryList = new ArrayList<>();
@@ -108,16 +107,11 @@ public class Library {
     }
 
     public static void statisticCategoryAndBook() {
-        for (Category category : categoryList) {
-            int sum = 0;
-            for (Book book : bookList) {
-                if (category.getId() == book.getCategoryId()) {
-                    sum++;
-                }
-            }
-            System.out.printf("ID Danh mục: %d - Tên danh mục: %s - Số sách thuộc thể loại %s là: %d", category.getId(), category.getName(), category.getName(), sum);
-            System.out.printf("\n");
-        }
+        categoryList.forEach(category -> {
+            long count = bookList.stream().filter(book -> book.getCategoryId() == category.getId()).count();
+            System.out.printf("ID Danh mục: %d - Tên danh mục: %s - Số sách thuộc thể loại %s là: %d", category.getId(), category.getName(), category.getName(), count);
+            System.out.print("\n");
+        });
     }
 
     public static void updateCategory(Scanner scanner) {
@@ -127,15 +121,19 @@ public class Library {
         boolean isCheck = true;
         try {
             int categoryId = Integer.parseInt(scanner.nextLine());
-            for (Category category : categoryList) {
-                if (category.getId() == categoryId) {
-                    isCheck = false;
-                    choiceItemUpdateCategory(scanner, category);
-                    break;
+            if (categoryId > 0){
+                for (Category category : categoryList) {
+                    if (category.getId() == categoryId) {
+                        isCheck = false;
+                        choiceItemUpdateCategory(scanner, category);
+                        break;
+                    }
                 }
-            }
-            if (isCheck) {
-                System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
+                if (isCheck) {
+                    System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
+                }
+            }else {
+                System.err.println("Mã danh mục phải lớn hơn 0, vui lòng nhập lại");
             }
         } catch (NumberFormatException nfe) {
             System.err.println("Yêu cầu nhập vào số nguyên, vui lòng nhập lại");
@@ -371,7 +369,7 @@ public class Library {
                                 System.out.println("Danh mục hiện đang quản lý là");
                                 for (Category category : categoryList) {
                                     System.out.printf("ID: %d - Name: %s", category.getId(), category.getName());
-                                    System.out.printf("\n");
+                                    System.out.print("\n");
                                 }
 
                                 System.out.println("Vui lòng chọn 1 danh mục hiện có để cập nhật cho danh mục cũ của sách");
@@ -467,7 +465,7 @@ public class Library {
             for (Book book : bookWithCategory){
                 System.out.printf("\t%s\n", book.getTitle());
             }
-            System.out.printf("\n");
+            System.out.print("\n");
         }
     }
 }

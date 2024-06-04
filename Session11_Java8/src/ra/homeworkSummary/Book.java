@@ -113,14 +113,7 @@ public class Book implements IEntity {
             String idRegex = "[B][\\w]{3}";
             if (!id.isEmpty()) {
                 if (Pattern.matches(idRegex, id)) {
-                    boolean isCheck = false;
-                    for (Book book : Library.bookList) {
-                        if (book.equals(id)) {
-                            isCheck = true;
-                            break;
-                        }
-                    }
-                    if (isCheck) {
+                    if (!Library.bookList.stream().anyMatch(book -> book.equals(id))) {
                         System.err.println("Mã sách đã tồn tại, vui lòng nhập lại");
                     } else {
                         return id;
@@ -141,14 +134,7 @@ public class Book implements IEntity {
             String idRegex = "[\\w[\\s]]{6,50}";
             if (!title.isEmpty()) {
                 if (Pattern.matches(idRegex, title)) {
-                    boolean isCheck = false;
-                    for (Book book : Library.bookList) {
-                        if (book.equals(title)) {
-                            isCheck = true;
-                            break;
-                        }
-                    }
-                    if (isCheck) {
+                    if (!Library.bookList.stream().anyMatch(book -> book.equals(title))) {
                         System.err.println("Tiêu đề sách đã tồn tại, vui lòng nhập lại");
                     } else {
                         return title;
@@ -159,7 +145,6 @@ public class Book implements IEntity {
             } else {
                 System.err.println("Không được để trống tên sách, vui lòng nhập lại");
             }
-
         } while (true);
     }
 
@@ -230,14 +215,7 @@ public class Book implements IEntity {
         do {
             try {
                 int categoryId = Integer.parseInt(scanner.nextLine());
-                boolean isCheck = false;
-                for (Category category : Library.categoryList) {
-                    if (category.getId() == categoryId) {
-                        isCheck = true;
-                        break;
-                    }
-                }
-                if (isCheck) {
+                if (Library.categoryList.stream().anyMatch(category -> category.getId() == categoryId)) {
                     return categoryId;
                 } else {
                     System.err.println("Mã danh mục vừa nhập không có trong mã danh mục đã lưu,vui lòng nhập lại");
