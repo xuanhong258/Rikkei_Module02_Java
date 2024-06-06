@@ -1,6 +1,7 @@
 package ra.homeworkSummary;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Library {
     public static List<Category> categoryList = new ArrayList<>();
@@ -118,10 +119,11 @@ public class Library {
         System.out.println("Danh mục hiện đang quản lý là: ");
         displayCategory();
         System.out.println("Nhập vào mã danh mục muốn cập nhật");
-        boolean isCheck = true;
+
         try {
             int categoryId = Integer.parseInt(scanner.nextLine());
-            if (categoryId > 0){
+            if (categoryId > 0) {
+                boolean isCheck = true;
                 for (Category category : categoryList) {
                     if (category.getId() == categoryId) {
                         isCheck = false;
@@ -132,7 +134,7 @@ public class Library {
                 if (isCheck) {
                     System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
                 }
-            }else {
+            } else {
                 System.err.println("Mã danh mục phải lớn hơn 0, vui lòng nhập lại");
             }
         } catch (NumberFormatException nfe) {
@@ -155,8 +157,21 @@ public class Library {
                         switch (choice) {
                             case 1:
                                 System.out.println("Nhập vào tên mới của danh mục");
-                                String newCategoryName = scanner.nextLine();
-                                category.setName(newCategoryName);
+                                try {
+                                    String newCategoryName = scanner.nextLine();
+                                    String nameRegex = "[\\w[\\s]]{6,30}";
+                                    if (Pattern.matches(nameRegex, newCategoryName)) {
+                                        if (categoryList.stream().anyMatch(catelog -> catelog.getName().equals(newCategoryName))) {
+                                            System.err.println("Tên danh mục đã tồn tại, vui lòng nhập lại");
+                                        } else {
+                                            category.setName(newCategoryName);
+                                        }
+                                    } else {
+                                        System.err.println("Tên danh mục phải dài từ 6-30 kí tự, vui lòng nhập lại");
+                                    }
+                                } catch (Exception ex) {
+                                    System.err.println("Không được để trống tên danh mục, vui lòng nhập lại");
+                                }
                                 System.out.println("----CẬP NHẬT THÀNH CÔNG-----");
                                 break;
                             case 2:
@@ -416,7 +431,7 @@ public class Library {
         boolean isCheck = true;
 
         String bookId = scanner.nextLine();
-        if(!bookId.isEmpty()){
+        if (!bookId.isEmpty()) {
             for (Book book : bookList) {
                 if (book.getId().equals(bookId)) {
                     isCheck = false;
@@ -427,42 +442,42 @@ public class Library {
             if (isCheck) {
                 System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
             }
-        }else {
+        } else {
             System.err.println("Không được để trống mã sách, vui lòng nhập lại ");
         }
     }
 
-    public static void searchBook(Scanner scanner){
+    public static void searchBook(Scanner scanner) {
         System.out.println("Nhập vào nội dung muốn tìm kiếm");
 
         String inputSearch = scanner.nextLine();
 
-        if (!inputSearch.isEmpty()){
+        if (!inputSearch.isEmpty()) {
             int cnt = 0;
-            for (Book book : bookList){
-                if (book.getTitle().contains(inputSearch) || book.getAuthor().contains(inputSearch) || book.getPublisher().contains(inputSearch)){
+            for (Book book : bookList) {
+                if (book.getTitle().contains(inputSearch) || book.getAuthor().contains(inputSearch) || book.getPublisher().contains(inputSearch)) {
                     cnt++;
                     book.output();
                 }
             }
-            if(cnt == 0){
+            if (cnt == 0) {
                 System.err.println("Không có sách nào tìm thấy, vui lòng nhập lại");
             }
-        }else {
+        } else {
             System.err.println("Không được để trống trường tìm kiếm, vui lòng nhập lại");
         }
     }
 
-    public static void displayBookByCategory(){
-        for (Category category : categoryList){
+    public static void displayBookByCategory() {
+        for (Category category : categoryList) {
             List<Book> bookWithCategory = new ArrayList<>();
-            for (Book book: bookList){
-                if (category.getId() == book.getCategoryId()){
+            for (Book book : bookList) {
+                if (category.getId() == book.getCategoryId()) {
                     bookWithCategory.add(book);
                 }
             }
             System.out.printf("%s: \n", category.getName());
-            for (Book book : bookWithCategory){
+            for (Book book : bookWithCategory) {
                 System.out.printf("\t%s\n", book.getTitle());
             }
             System.out.print("\n");

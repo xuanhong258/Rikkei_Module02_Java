@@ -60,7 +60,7 @@ public class Category implements IEntity{
             try {
                 int id = Integer.parseInt(scanner.nextLine());
                 if(id > 0){
-                    if (!Library.categoryList.stream().anyMatch(category -> category.getId() == id)){
+                    if (!Library.categoryList.stream().noneMatch(category -> category.getId() == id)){
                         System.err.println("Mã danh mục đã tồn tại, vui lòng nhập lại");
                     }else {
                         return id;
@@ -81,7 +81,7 @@ public class Category implements IEntity{
                 String name = scanner.nextLine();
                 String nameRegex = "[\\w[\\s]]{6,30}";
                 if (Pattern.matches(nameRegex, name)){
-                    if(!Library.categoryList.stream().anyMatch(category -> category.getName().equals(name))){
+                    if(!Library.categoryList.stream().noneMatch(category -> category.getName().equals(name))){
                         System.err.println("Tên danh mục đã tồn tại, vui lòng nhập lại");
                     }else {
                         return name;

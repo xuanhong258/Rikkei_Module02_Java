@@ -113,7 +113,7 @@ public class Book implements IEntity {
             String idRegex = "[B][\\w]{3}";
             if (!id.isEmpty()) {
                 if (Pattern.matches(idRegex, id)) {
-                    if (!Library.bookList.stream().anyMatch(book -> book.equals(id))) {
+                    if (!Library.bookList.stream().noneMatch(book -> book.equals(id))) {
                         System.err.println("Mã sách đã tồn tại, vui lòng nhập lại");
                     } else {
                         return id;
@@ -134,7 +134,7 @@ public class Book implements IEntity {
             String idRegex = "[\\w[\\s]]{6,50}";
             if (!title.isEmpty()) {
                 if (Pattern.matches(idRegex, title)) {
-                    if (!Library.bookList.stream().anyMatch(book -> book.equals(title))) {
+                    if (!Library.bookList.stream().noneMatch(book -> book.equals(title))) {
                         System.err.println("Tiêu đề sách đã tồn tại, vui lòng nhập lại");
                     } else {
                         return title;
@@ -208,7 +208,7 @@ public class Book implements IEntity {
     public int inputCategoryId(Scanner scanner) {
         System.out.println("Mã danh mục hiện có là:");
         for (Category category : Library.categoryList) {
-            System.out.printf("ID: %d. %s", category.getId(), category.getName());
+            System.out.printf("ID: %d - Name: %s", category.getId(), category.getName());
             System.out.printf("\n");
         }
         System.out.println("Vui lòng nhập vào mã danh mục cho sách");
