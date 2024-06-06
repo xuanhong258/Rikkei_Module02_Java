@@ -102,20 +102,8 @@ public class Library {
         categoryList.add(category);
     }
 
-    public static void sortAlphabet() {
-        Collections.sort(categoryList, new Comparator<Category>() {
-            @Override
-            public int compare(Category o1, Category o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
-    }
-
     public static void displayCategory() {
-        sortAlphabet();
-        for (Category category : categoryList) {
-            category.output();
-        }
+        categoryList.stream().sorted(Comparator.comparing(Category::getName)).forEach(System.out::println);
     }
 
     public static void statisticCategoryAndBook() {

@@ -124,4 +124,12 @@ public class Category implements IEntity{
             }
         }while (true);
     }
+
+    public String toString(){
+        if(this.status){
+            return "ID: " + this.id + " - Name: " + this.name + " - Status: Hoạt động";
+        }else {
+            return "ID: " + this.id + " - Name: " + this.name + " - Status: Không hoạt động";
+        }
+    }
 }
