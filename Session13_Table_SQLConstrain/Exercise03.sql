@@ -1,7 +1,8 @@
 CREATE DATABASE exercise03;
 use exercise03;
+
 create table customer(
-	c_id int primary key unique,
+	c_id int primary key,
     c_name varchar(25) not null,
     c_age tinyint check(c_age > 0)
 );
@@ -16,7 +17,7 @@ create table orders(
 
 
 create table product(
-	p_id int primary key unique,
+	p_id int primary key,
     p_name varchar(25) not null,
     p_price int check(p_price > 0)
 );

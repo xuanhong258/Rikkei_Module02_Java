@@ -2,12 +2,12 @@ CREATE DATABASE exercise01;
 use exercise01;
 
 create table vat_tu(
-	maVT int primary key unique,
+	maVT int primary key,
     tenVT varchar(100) not null
 );
 
 create table phieu_xuat(
-	soPX int primary key unique,
+	soPX int primary key,
     ngay_xuat date not null
 );
 
@@ -21,7 +21,7 @@ create table phieu_xuat_chi_tiet(
 );
 
 create table phieu_nhap(
-	soPN int primary key unique,
+	soPN int primary key,
     ngay_nhap date not null
 );
 
@@ -35,14 +35,14 @@ create table phieu_nhap_chi_tiet(
 );
 
 create table nha_cung_cap(
-	maNCC int primary key unique,
+	maNCC int primary key,
     tenNCC varchar(100) not null,
     dia_chi text,
     so_dien_thoai text
 );
 
 create table don_dat_hang(
-	soDH int primary key unique,
+	soDH int primary key,
     ngayDH date not null,
     maNCC int,
     foreign key(maNCC) references nha_cung_cap(maNCC)
