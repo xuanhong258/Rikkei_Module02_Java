@@ -63,8 +63,14 @@ from ((customer c inner join orders o on c.customer_id = o.customer_id)
 );
 
 select c.customer_name
-from customer c right join orders o on c.customer_id = o.customer_id
-where c.customer_id <> o.customer_id;
+from(select c.customer_id 
+	from customer c inner join orders o on c.customer_id = o.customer_id) as od
+where c.customer_id <> od.customer_id;
+
+select o.order_id, o.order_date, od.quantity * p.product_price as price
+from(orders o inner join order_detail od on o.order_id = od.order_id)
+inner join products p on p.product_id = od.product_id
+order by price asc;
 
 
 
