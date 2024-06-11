@@ -390,14 +390,7 @@ public class Library {
                                 System.out.println("Vui lòng chọn 1 danh mục hiện có để cập nhật cho danh mục cũ của sách");
                                 try {
                                     int newCategoryId = Integer.parseInt(scanner.nextLine());
-                                    boolean flag = false;
-                                    for (Category category : categoryList) {
-                                        if (newCategoryId == category.getId()) {
-                                            flag = true;
-                                            break;
-                                        }
-                                    }
-                                    if (flag) {
+                                    if (categoryList.stream().anyMatch(category -> category.getId() == newCategoryId)) {
                                         book.setCategoryId(newCategoryId);
                                     } else {
                                         System.err.println("Mã danh mục không trùng với mã danh mục hiện có, vui lòng nhập lại");
