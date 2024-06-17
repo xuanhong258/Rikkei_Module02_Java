@@ -89,6 +89,7 @@ public class CategoriesBusiness {
             callSt.registerOutParameter(2, Types.INTEGER);
             callSt.execute();
             boolean result = callSt.getBoolean(2);
+            return result;
         }catch (Exception ex){
             ex.printStackTrace();
         }finally {
@@ -119,5 +120,91 @@ public class CategoriesBusiness {
             ConnectionDB.closeConnection(conn, callSt);
         }
         return catalog;
+    }
+
+    public static boolean deleteCatalogById(int catalogId){
+        Connection conn = null;
+        CallableStatement callSt = null;
+        boolean result = false;
+        try {
+            conn = ConnectionDB.openConnection();
+            callSt = conn.prepareCall("{call delete_catalog_by_id(?)}");
+            callSt.setInt(1, catalogId);
+            callSt.executeUpdate();
+            result = true;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            ConnectionDB.closeConnection(conn, callSt);
+        }
+        return result;
+    }
+
+    public static List<Categories> sortCatalogByName(){
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Categories> categoriesList = null;
+        try {
+            conn = ConnectionDB.openConnection();
+            callSt = conn.prepareCall("{call sort_catalog_by_name()}");
+            ResultSet rs = callSt.executeQuery();
+            categoriesList = new ArrayList<>();
+            while (rs.next()){
+                Categories categories = new Categories();
+                categories.setCatalogId(rs.getInt("catalog_id"));
+                categories.setCatalogName(rs.getString("catalog_name"));
+                categories.setDescription(rs.getString("description"));
+                categories.setStatus(rs.getBoolean("catalog_status"));
+                categoriesList.add(categories);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            ConnectionDB.closeConnection(conn, callSt);
+        }
+        return categoriesList;
+    }
+
+    public static Categories findCatalogByName(String catalogName){
+        Connection conn = null;
+        CallableStatement callSt = null;
+        Categories categories = null;
+        try {
+            conn = ConnectionDB.openConnection();
+            callSt = conn.prepareCall("{call find_catalog_by_name(?)}");
+            callSt.setString(1, catalogName);
+            ResultSet rs = callSt.executeQuery();
+            categories = new Categories();
+            if (rs.next()){
+                categories.setCatalogId(rs.getInt("catalog_id"));
+                categories.setCatalogName(rs.getString("catalog_name"));
+                categories.setDescription(rs.getString("description"));
+                categories.setStatus(rs.getBoolean("catalog_status"));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            ConnectionDB.closeConnection(conn, callSt);
+        }
+        return categories;
+    }
+
+    public static boolean isExistCatalogName(String catalogName){
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try {
+            conn = ConnectionDB.openConnection();
+            callSt = conn.prepareCall("{call is_exist_catalog_name(?,?)}");
+            callSt.setString(1, catalogName);
+            callSt.registerOutParameter(2, Types.INTEGER);
+            callSt.execute();
+            boolean result = callSt.getBoolean(2);
+            return result;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            ConnectionDB.closeConnection(conn, callSt);
+        }
+        return false;
     }
 }

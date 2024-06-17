@@ -40,7 +40,9 @@ public class Ecommerce {
             System.out.println("3. Cập nhật danh mục");
             System.out.println("4. Xóa danh mục");
             System.out.println("5. Hiển thị danh mục theo mã danh mục");
-            System.out.println("6. Thoát");
+            System.out.println("6. Sắp xếp danh mục theo tên giảm dần");
+            System.out.println("7. Hiển thị danh mục theo tên danh mục");
+            System.out.println("8. Thoát");
             System.out.print("Lựa chọn của bạn là: ");
 
             int choice = Integer.parseInt(scanner.nextLine());
@@ -52,12 +54,21 @@ public class Ecommerce {
                     Ecommerce.createCatalog(scanner);
                     break;
                 case 3:
+                    Ecommerce.updateCatalog(scanner);
                     break;
                 case 4:
+                    Ecommerce.deleteCatalogById(scanner);
                     break;
                 case 5:
+                    Ecommerce.displayCatalogById(scanner);
                     break;
                 case 6:
+                    Ecommerce.sortCatalogByName();
+                    break;
+                case 7:
+                    Ecommerce.getCatalogByName(scanner);
+                    break;
+                case 8:
                     isExist = false;
                     break;
                 default:
@@ -113,9 +124,59 @@ public class Ecommerce {
                         isExist = false;
                 }
             }while (isExist);
-
+            boolean result = CategoriesBusiness.updateCatalog(catalogUpdate);
+            if (result){
+                System.out.println("Cập nhật danh mục thành công");
+            }else {
+                System.err.println("Cập nhật danh mục thất bại");
+            }
         }else {
             System.err.println("Mã danh mục không tồn tại");
+        }
+    }
+
+    public static void deleteCatalogById(Scanner scanner){
+        System.out.println("Nhập vào mã danh mục cần xóa");
+        int catalogId = Integer.parseInt(scanner.nextLine());
+        boolean isExist = CategoriesBusiness.isExistCatalog(catalogId);
+        if(isExist){
+            boolean result = CategoriesBusiness.deleteCatalogById(catalogId);
+            if (result){
+                System.out.println("Xóa danh mục thành công");
+            }else {
+                System.err.println("Xóa danh mục thất bại");
+            }
+        }else {
+            System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
+        }
+    }
+
+    public static void displayCatalogById(Scanner scanner){
+        System.out.println("Nhập vào mã danh mục cần hiển thị");
+        int catalogId = Integer.parseInt(scanner.nextLine());
+        if(CategoriesBusiness.isExistCatalog(catalogId)){
+            Categories categories = CategoriesBusiness.getCatalogById(catalogId);
+            System.out.println(categories);
+        }else {
+            System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
+        }
+    }
+
+    public static void sortCatalogByName(){
+        System.out.println("Mã danh mục sắp xếp theo tên giảm dần là:");
+        List<Categories> categoriesList = CategoriesBusiness.sortCatalogByName();
+        categoriesList.stream().forEach(System.out::println);
+    }
+
+    public static void getCatalogByName(Scanner scanner){
+        System.out.println("Nhập vào tên danh mục muốn tìm kiếm");
+        String catalogName = scanner.nextLine();
+        if (CategoriesBusiness.isExistCatalogName(catalogName)){
+            System.out.println("Mã danh mục tìm thấy là:");
+            Categories categories = CategoriesBusiness.findCatalogByName(catalogName);
+            System.out.println(categories);
+        }else {
+            System.err.println("Tên danh mục không tìm thấy, vui lòng nhập lại");
         }
     }
 }
