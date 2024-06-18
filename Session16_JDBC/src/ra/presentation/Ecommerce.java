@@ -1,7 +1,10 @@
 package ra.presentation;
 
 import ra.business.CategoriesBusiness;
+import ra.business.ProductBusiness;
 import ra.entity.Categories;
+import ra.entity.Product;
+import ra.entity.StatisticProduct;
 
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +25,7 @@ public class Ecommerce {
                     Ecommerce.displayCategoryMenu(scanner);
                     break;
                 case 2:
+                    Ecommerce.displayProductMenu(scanner);
                     break;
                 case 3:
                     System.exit(0);
@@ -178,5 +182,157 @@ public class Ecommerce {
         }else {
             System.err.println("Tên danh mục không tìm thấy, vui lòng nhập lại");
         }
+    }
+
+    public static void displayProductMenu(Scanner scanner){
+        boolean isExist = true;
+        do {
+            System.out.println("------------PRODUCT MANAGEMENT-----------");
+            System.out.println("1. Danh sách sản phẩm");
+            System.out.println("2. Thêm mới sản phẩm");
+            System.out.println("3. Cập nhật sản phẩm");
+            System.out.println("4. Xóa sản phẩm");
+            System.out.println("5. Tìm kiếm sản phẩm theo tên sản phẩm hoặc tiêu đề sản phẩm");
+            System.out.println("6. Thống kê sản phẩm theo danh mục sản phẩm");
+            System.out.println("7. Thoát");
+            System.out.print("Lựa chọn của bạn là: ");
+
+            int choice = Integer.parseInt(scanner.nextLine());
+            switch (choice){
+                case 1:
+                    Ecommerce.displayListProduct();
+                    break;
+                case 2:
+                    Ecommerce.createProduct(scanner);
+                    break;
+                case 3:
+                    Ecommerce.updateProduct(scanner);
+                    break;
+                case 4:
+                    Ecommerce.deleteProduct(scanner);
+                    break;
+                case 5:
+                    Ecommerce.findProduct(scanner);
+                    break;
+                case 6:
+                    Ecommerce.statisticProduct();
+                    break;
+                case 7:
+                    isExist = false;
+                    break;
+                default:
+                    System.err.println("Vui lòng chọn từ 1->6");
+            }
+        }while (isExist);
+    }
+
+    public static void displayListProduct(){
+        System.out.println("DANH SÁCH SẢN PHẨM LÀ:");
+        List<Product> productList = ProductBusiness.getAllProduct();
+
+        productList.forEach(product -> product.displayData());
+    }
+
+
+    public static void createProduct(Scanner scanner){
+        Product productNew = new Product();
+        productNew.inputData(scanner);
+
+        boolean result =  ProductBusiness.createProduct(productNew);
+        if (result){
+            System.out.println("Tạo mới sản phẩm thành công");
+        }else {
+            System.err.println("Tạo mới sản phẩm thất bại");
+        }
+    }
+
+    public static void updateProduct(Scanner scanner){
+        System.out.println("Nhập vào mã sản phẩm cần cập nhật");
+        String productId = scanner.nextLine();
+
+        if (ProductBusiness.isExistProductId(productId)){
+            boolean isExist = true;
+            Product productUpdate = ProductBusiness.getProductById(productId);
+            do {
+                System.out.println("1. Cập nhật tên sản phẩm");
+                System.out.println("2. Cập nhật giá sản phẩm");
+                System.out.println("3. Cập nhật tiêu đề sản phẩm");
+                System.out.println("4. Cập nhật mã danh mục của sản phẩm");
+                System.out.println("5. Cập nhật trạng thái sản phẩm");
+                System.out.println("6. Thoát");
+                System.out.print("Lựa chọn của bạn là: ");
+
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice){
+                    case 1:
+                        System.out.println("Nhập vào tên mới của sản phẩm");
+                        productUpdate.setProductName(scanner.nextLine());
+                        break;
+                    case 2:
+                        System.out.println("Nhập vào giá mới của sản phẩm");
+                        productUpdate.setProductPrice(Float.parseFloat(scanner.nextLine()));
+                        break;
+                    case 3:
+                        System.out.println("Nhập va tiêu đề mới của sản phẩm");
+                        productUpdate.setProductTitle(scanner.nextLine());
+                        break;
+                    case 4:
+                        System.out.println("Nhập vào mã danh mục mới của sản phẩm");
+                        productUpdate.setCatalogId(Integer.parseInt(scanner.nextLine()));
+                        break;
+                    case 5:
+                        System.out.println("Nhập vào trạng thái mới của sản phẩm");
+                        productUpdate.setProductStatus(Boolean.parseBoolean(scanner.nextLine()));
+                        break;
+                    case 6:
+                        isExist = false;
+                        break;
+                    default:
+                        System.err.println("Vui lòng chọn từ 1->6");
+                }
+                boolean result = ProductBusiness.updateProduct(productUpdate);
+                if (result){
+                    System.out.println("Cập nhật sản phẩm thành công");
+                }else {
+                    System.err.println("Cập nhật sản phẩm thất bại");
+                }
+            }while(isExist);
+        }else{
+            System.err.println("Mã sản phẩm không tồn tại, vui lòng nhập lại");
+        }
+    }
+
+    public static void deleteProduct(Scanner scanner){
+        System.out.println("Nhập vào mã sản phẩm muốn cập nhật");
+        String productId = scanner.nextLine();
+
+        boolean isExist = ProductBusiness.isExistProductId(productId);
+
+        if(isExist){
+            boolean result = ProductBusiness.deleteProduct(productId);
+            if (result){
+                System.out.println("Xóa sản phẩm thành công");
+            }else {
+                System.err.println("Xóa sản phẩm thất bại");
+            }
+        }else {
+            System.err.println("Mã danh mục không tồn tại, vui lòng nhập lại");
+        }
+
+    }
+
+    public static void findProduct(Scanner scanner){
+        System.out.println("Nhập vào tên sản phẩm hoặc tiêu đề sản phẩm muốn tìm kiếm");
+        String inputString = scanner.nextLine();
+
+        List<Product> productList = ProductBusiness.findProducts(inputString);
+        System.out.println("Danh sách sản phẩm tìm thấy là: ");
+        productList.forEach(product -> product.displayData());
+    }
+
+    public static void statisticProduct(){
+        System.out.println("Số lượng sản phẩm theo mã danh mục là:");
+        List<StatisticProduct> statisticProductList = ProductBusiness.statisticProductList();
+        statisticProductList.forEach(statisticProduct -> statisticProduct.displayData());
     }
 }
