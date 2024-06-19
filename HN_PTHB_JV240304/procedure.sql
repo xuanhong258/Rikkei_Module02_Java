@@ -88,13 +88,8 @@ create procedure proc_delete_department(
     id_in varchar(5)
 )
 begin
-    declare cnt int;
-    set cnt = (select d.is_deleted from department d);
-    if cnt = 1 then
-        set cnt = 0;
-    end if;
     update department
-        set is_deleted = cnt
+        set is_deleted = 0
     where department_id = id_in;
 end &&
 DELIMITER &&
